@@ -2,6 +2,8 @@
 # Nikki van Gurp, Ilse Kerkhove, Dertje Roggeveen & Marieke Schelhaas
 import os
 import re
+from baseline import *
+from sklearn import metrics
 
 
 def read_dataset(subset):
@@ -25,13 +27,28 @@ def read_dataset(subset):
     print(f'Number of samples: {len(words)}')
     return words, labels, numbers
 
+def preprocess(word_list):
+    ''' this function returns the preprocessed version of the word list'''
+    preprocessed_words = []
+    for word in word_list:
+        lowercase_word = word.lower()
+        preprocessed_words.append(lowercase_word)
+
+    return preprocessed_words
+
 
 def main():
     words, labels, numbers = read_dataset('train')
+    preprocessed = preprocess(words)
+    # print(preprocessed)
     # print(words)
     # print(labels)
     # print(numbers)
-    
+
+    # if uncommented --> makes baseline labels and prints its accuracy
+    # baseline_labels = get_baseline(words) # duurt lang
+    # accuracy = metrics.accuracy_score(labels, baseline_labels)
+    # print(accuracy)    
 
 
 if __name__ == "__main__":

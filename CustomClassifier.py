@@ -2,7 +2,6 @@ import abc
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 
-
 class CustomClassifier(abc.ABC):
     def __init__(self):
         self.counter = None
@@ -15,7 +14,6 @@ class CustomClassifier(abc.ABC):
             features_array = self.counter.fit_transform(text_list)
         else:
             features_array = self.counter.transform(text_list)
-        self.counter.fit(text_list)
 
         return features_array
 

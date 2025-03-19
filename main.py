@@ -6,7 +6,7 @@ import sklearn
 from baseline import *
 from svm_classifier import SVMClassifier
 from sklearn import metrics
-from sklearn_svm_classifier import SVMClassifier
+from svm_classifier import SVMClassifier
 
 
 def read_dataset(subset):
@@ -40,25 +40,23 @@ def preprocess(word_list):
 
     return preprocessed_words
 
-# def train_test(classifier):
-#     train_data, train_labels = read_dataset('train')
-#     test_data, test_labels = read_dataset('dev')
-#
-#     train_data = preprocess(train_data)
-#     test_data = preprocess(test_data)
-#
-#     if classifier == 'svm':
-#         cls = SVMClassifier()
-#
-#
-#     return cls
+def train_test(classifier):
+    train_data, train_labels, train_num = read_dataset('train')
+    test_data, test_labels, test_num = read_dataset('dev')
+
+    train_data = preprocess(train_data)
+    test_data = preprocess(test_data)
+
+    if classifier == 'svm':
+        cls = SVMClassifier()
+
+
+    return cls
 
 
 
 def main():
-    words, labels, numbers = read_dataset('train')
-    preprocessed = preprocess(words)
-    # train_test('svm')
+     cls = train_test('svm')
 
     # print(preprocessed)
     # print(words)

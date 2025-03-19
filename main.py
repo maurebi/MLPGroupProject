@@ -6,7 +6,6 @@ import sklearn
 from baseline import *
 from svm_classifier import SVMClassifier
 from sklearn import metrics
-from svm_classifier import SVMClassifier
 
 
 def read_dataset(subset):
@@ -40,16 +39,20 @@ def preprocess(word_list):
 
     return preprocessed_words
 
-def train_test(classifier):
-    train_data, train_labels, train_num = read_dataset('train')
-    test_data, test_labels, test_num = read_dataset('dev')
+def train_test(classifier='svm'):
+    train_text, train_labels, train_num = read_dataset('train')
+    test_text, test_labels, test_num = read_dataset('dev')
 
-    train_data = preprocess(train_data)
-    test_data = preprocess(test_data)
+    train_text = preprocess(train_text)
+    test_text = preprocess(test_text)
 
     if classifier == 'svm':
         cls = SVMClassifier()
 
+    # Generate features from train and test data
+    # features: character count features as a 2D numpy array, in tf-idf form
+    train_feats = cls.tf_idf(cls.get_features(train_text))
+    test_feats = cls.tf_idf(cls.get_features(test_text))
 
     return cls
 

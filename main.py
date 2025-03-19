@@ -2,8 +2,10 @@
 # Nikki van Gurp, Ilse Kerkhove, Dertje Roggeveen & Marieke Schelhaas
 import os
 import re
+import sklearn
 from baseline import *
 from sklearn import metrics
+from sklearn_svm_classifier import SVMClassifier
 
 
 def read_dataset(subset):
@@ -27,6 +29,7 @@ def read_dataset(subset):
     print(f'Number of samples: {len(words)}')
     return words, labels, numbers
 
+
 def preprocess(word_list):
     ''' this function returns the preprocessed version of the word list'''
     preprocessed_words = []
@@ -36,13 +39,6 @@ def preprocess(word_list):
 
     return preprocessed_words
 
-
-def read_dataset(subset, split):
-    pass
-
-
-def preprocess_dataset(text_list):
-    pass
 
 
 def main():
@@ -56,7 +52,10 @@ def main():
     # if uncommented --> makes baseline labels and prints its accuracy
     # baseline_labels = get_baseline(words) # duurt lang
     # accuracy = metrics.accuracy_score(labels, baseline_labels)
-    # print(accuracy)    
+    # print(accuracy)  
+    
+
+    
 
 if __name__ == "__main__":
     main()

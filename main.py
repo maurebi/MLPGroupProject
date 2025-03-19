@@ -37,18 +37,18 @@ def preprocess(word_list):
 
     return preprocessed_words
 
-# def train_test(classifier):
-#     train_data, train_labels = read_dataset('train')
-#     test_data, test_labels = read_dataset('dev')
-#
-#     train_data = preprocess(train_data)
-#     test_data = preprocess(test_data)
-#
-#     if classifier == 'svm':
-#         cls = SVMClassifier()
-#
-#
-#     return cls
+def train_test(classifier):
+    train_data, train_labels = read_dataset('train')
+    test_data, test_labels = read_dataset('dev')
+
+    train_data = preprocess(train_data)
+    test_data = preprocess(test_data)
+
+    if classifier == 'svm':
+        cls = SVMClassifier()
+
+
+    return cls
 
 
 def main():

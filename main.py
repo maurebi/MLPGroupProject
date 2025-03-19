@@ -3,6 +3,7 @@
 import os
 import re
 from baseline import *
+from svm_classifier import SVMClassifier
 from sklearn import metrics
 
 
@@ -36,10 +37,25 @@ def preprocess(word_list):
 
     return preprocessed_words
 
+# def train_test(classifier):
+#     train_data, train_labels = read_dataset('train')
+#     test_data, test_labels = read_dataset('dev')
+#
+#     train_data = preprocess(train_data)
+#     test_data = preprocess(test_data)
+#
+#     if classifier == 'svm':
+#         cls = SVMClassifier()
+#
+#
+#     return cls
+
 
 def main():
     words, labels, numbers = read_dataset('train')
     preprocessed = preprocess(words)
+    # train_test('svm')
+
     # print(preprocessed)
     # print(words)
     # print(labels)
@@ -48,7 +64,7 @@ def main():
     # if uncommented --> makes baseline labels and prints its accuracy
     # baseline_labels = get_baseline(words) # duurt lang
     # accuracy = metrics.accuracy_score(labels, baseline_labels)
-    # print(accuracy)    
+    # print(accuracy)
 
 
 if __name__ == "__main__":

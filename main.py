@@ -2,6 +2,7 @@
 # Nikki van Gurp, Ilse Kerkhove, Dertje Roggeveen & Marieke Schelhaas
 import os
 import re
+import sklearn
 from baseline import *
 from svm_classifier import SVMClassifier
 from sklearn import metrics
@@ -24,9 +25,11 @@ def read_dataset(subset):
                     words.append(splitted_line[0])
                     labels.append(splitted_line[1])
                     numbers.append(sentence_number)
-    assert len(words) == len(labels) and len(labels) == len(numbers), 'Error: there should be equal number of texts, labels and sentence numbers.'
+    assert len(words) == len(labels) and len(labels) == len(
+        numbers), 'Error: there should be equal number of texts, labels and sentence numbers.'
     print(f'Number of samples: {len(words)}')
     return words, labels, numbers
+
 
 def preprocess(word_list):
     ''' this function returns the preprocessed version of the word list'''
@@ -37,24 +40,49 @@ def preprocess(word_list):
 
     return preprocessed_words
 
-def train_test(classifier):
-    train_data, train_labels = read_dataset('train')
-    test_data, test_labels = read_dataset('dev')
+def evaluate(true_labels, predicted_labels):
+    confusion_matrix = metrics.confusion_matrix(y_true=true_labels, y_pred=predicted_labels)
+    print('***** Evaluation *****')
+    print(confusion_matrix)
 
-    train_data = preprocess(train_data)
-    test_data = preprocess(test_data)
+    accuracy = metrics.accuracy_score(true_labels, predicted_labels)
+    print("Accuracy:", accuracy)
+
+    precision = metrics.precision_score(true_labels, predicted_labels, average='macro')
+    print("Macro precision score:", precision)
+
+    recall = metrics.recall_score(true_labels, predicted_labels, average='macro')
+    print("Macro recall score:", recall)
+
+    f1_score = metrics.f1_score(true_labels, predicted_labels, average='macro')
+    print("F1-score:", f1_score)
+
+def train_test(classifier='svm'):
+    train_text, train_labels, train_num = read_dataset('train')
+    test_text, test_labels, test_num = read_dataset('dev')
+
+    train_text = preprocess(train_text)
+    test_text = preprocess(test_text)
 
     if classifier == 'svm':
         cls = SVMClassifier()
 
+    # Generate features from train and test data
+    # features: character count features as a 2D numpy array, in tf-idf form
+    train_feats = cls.tf_idf(cls.get_features(train_text))
+    test_feats = cls.tf_idf(cls.get_features(test_text))
+
+    cls.fit(train_feats, train_labels)
+
+    predicted_test_labels = cls.predict(test_feats)
+
+    evaluate(test_labels, predicted_test_labels)
 
     return cls
 
 
 def main():
-    words, labels, numbers = read_dataset('train')
-    preprocessed = preprocess(words)
-    # train_test('svm')
+    train_test('svm')
 
     # print(preprocessed)
     # print(words)

@@ -1,4 +1,4 @@
-import langid
+import py3langid as langid
 
 def get_baseline(word_list):
     ''' This function is the baseline model and returns the labels. It uses 

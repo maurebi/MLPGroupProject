@@ -1,4 +1,5 @@
 import py3langid as langid
+import string
 
 def get_baseline(word_list):
     ''' This function is the baseline model and returns the labels. It uses 
@@ -8,13 +9,15 @@ def get_baseline(word_list):
     print("***** Baseline model predicts labels ******")
     labels = []
     for word in word_list:
-        # print(langid.classify(word))
-        classification = langid.classify(word)
-        if classification[0] == 'en':
-            labels.append('lang1')
-        elif classification[0] == 'es':
-            labels.append('lang2')
-        else:
+        if any(ch in string.punctuation for ch in word):
             labels.append('other')
+        else:
+            classification = langid.classify(word)
+            if classification[0] == 'en':
+                labels.append('lang1')
+            elif classification[0] == 'es':
+                labels.append('lang2')
+            else:
+                labels.append('other')
     return labels
 

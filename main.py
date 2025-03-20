@@ -40,6 +40,8 @@ def preprocess(word_list):
     for word in word_list:
         lowercase_word = word.lower()
         preprocessed_words.append(lowercase_word)
+    
+    print(f"Finished preprocessing for word list.")
 
     print(f"Finished preprocessing for word list.")
 

@@ -1,5 +1,5 @@
 from sklearn import svm
-from sklearn.multiclass import OneVsRestClassifier
+from sklearn.multiclass import OneVsOneClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from CustomClassifier import CustomClassifier
 
@@ -9,7 +9,7 @@ class SVMClassifier(CustomClassifier):
     def __init__(self, kernel='linear'):
         super().__init__()
         self.counter = None
-        self.classifier = OneVsRestClassifier(svm.SVC(kernel=kernel, class_weight='balanced'))
+        self.classifier = OneVsOneClassifier(svm.LinearSVC(class_weight='balanced', dual=False))
 
     def fit(self, train_features, train_labels):
         self.classifier.fit(train_features, train_labels)

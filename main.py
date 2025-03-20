@@ -4,6 +4,7 @@ import os
 import re
 import pandas as pd
 import sklearn
+import time
 from baseline import *
 from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier
@@ -70,8 +71,8 @@ def train_test(classifier='svm'):
     train_text, train_labels, train_num = read_dataset('train')
     test_text, test_labels, test_num = read_dataset('dev')
 
-    train_text, train_labels = train_text[:10000], train_labels[:10000]
-    test_text, test_labels = test_text[:10000], test_labels[:10000]
+    train_text, train_labels = train_text[:50000], train_labels[:50000]
+    test_text, test_labels = test_text[:50000], test_labels[:50000]
 
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
@@ -94,8 +95,8 @@ def train_test(classifier='svm'):
 
     predicted_test_labels = cls.predict(test_feats)
 
-    evaluate(test_labels, predicted_test_labels, class_labels=pd.unique(test_labels))
-    print(predicted_test_labels[:100], test_labels[:100])
+    evaluate(test_labels, predicted_test_labels)
+    #print(predicted_test_labels[:100], test_labels[:100])
 
     return cls
 
@@ -103,9 +104,8 @@ def train_test(classifier='svm'):
 def main():
     print("Running the svm classifier...")
     train_test('svm')
-
-    # print("Running the naive bayes classifier...")
-    # train_test('naive_bayes')
+    print("Running the naive bayes classifier...")
+    train_test('naive_bayes')
     words, labels, numbers = read_dataset('train')
     # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
     # print(preprocessed)

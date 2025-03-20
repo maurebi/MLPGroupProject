@@ -13,8 +13,8 @@ class NaiveBayesClassifier(CustomClassifier):
         parameter alpha. """
         super().__init__()
         self.alpha = alpha
-        self.model = MultinomialNB(class_prior=self.prior_probabilities, alpha=self.alpha)
         self.prior_probabilities = None
+        self.model = MultinomialNB(class_prior=self.prior_probabilities, alpha=self.alpha)
         self.is_trained = False
 
     def fit(self, X_train, y_train):

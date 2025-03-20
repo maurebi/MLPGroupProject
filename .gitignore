@@ -15,3 +15,6 @@ __pycache__/
 
 # Ignore logs and temp files
 *.log
+
+# Ignore dataset files
+*.conll

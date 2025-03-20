@@ -35,10 +35,13 @@ def read_dataset(subset):
 
 def preprocess(word_list):
     ''' this function returns the preprocessed version of the word list'''
+    print(f"Preprocessing the word list...")
     preprocessed_words = []
     for word in word_list:
         lowercase_word = word.lower()
         preprocessed_words.append(lowercase_word)
+    
+    print(f"Finished preprocessing for word list.")
 
     return preprocessed_words
 
@@ -94,9 +97,13 @@ def train_test(classifier='svm'):
 
 
 def main():
+    print("Running the svm classifier...")
     train_test('svm')
+
+    # print("Running the naive bayes classifier...")
+    # train_test('naive_bayes')
     words, labels, numbers = read_dataset('train')
-    words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
+    # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
     # print(preprocessed)
     # print(words)
     # print(labels)

@@ -35,12 +35,16 @@ def read_dataset(subset):
 
 def preprocess(word_list):
     ''' this function returns the preprocessed version of the word list'''
+    print(f"Preprocessing the word list...")
     preprocessed_words = []
     for word in word_list:
         lowercase_word = word.lower()
         preprocessed_words.append(lowercase_word)
 
+    print(f"Finished preprocessing for word list.")
+
     return preprocessed_words
+
 
 def evaluate(true_labels, predicted_labels, class_labels=None):
     confusion_matrix = metrics.confusion_matrix(y_true=true_labels, y_pred=predicted_labels)
@@ -58,6 +62,7 @@ def evaluate(true_labels, predicted_labels, class_labels=None):
 
     f1_score = metrics.f1_score(true_labels, predicted_labels, average='macro')
     print("F1-score:", f1_score)
+
 
 def train_test(classifier='svm'):
     train_text, train_labels, train_num = read_dataset('train')
@@ -94,16 +99,20 @@ def train_test(classifier='svm'):
 
 
 def main():
+    print("Running the svm classifier...")
     train_test('svm')
+
+    # print("Running the naive bayes classifier...")
+    # train_test('naive_bayes')
     words, labels, numbers = read_dataset('train')
-    words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
+    # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
     # print(preprocessed)
     # print(words)
     # print(labels)
     # print(numbers)
 
     # if uncommented --> makes baseline labels and prints its accuracy
-    baseline_labels = get_baseline(words) # duurt lang
+    baseline_labels = get_baseline(words)  # duurt lang
     # accuracy = metrics.accuracy_score(labels, baseline_labels)
     # print(accuracy)
     evaluate(labels, baseline_labels)

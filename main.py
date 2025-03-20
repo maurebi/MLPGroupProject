@@ -5,6 +5,7 @@ import re
 import sklearn
 from baseline import *
 from svm_classifier import SVMClassifier
+from naive_bayes import NaiveBayesClassifier
 from sklearn import metrics
 
 
@@ -66,6 +67,12 @@ def train_test(classifier='svm'):
 
     if classifier == 'svm':
         cls = SVMClassifier()
+    elif classifier == 'naive_bayes':
+        cls = NaiveBayesClassifier()
+    # elif classifier == 'knn':
+    #     cls = KNNClassifier()
+    else:
+        raise ValueError('Invalid classifier name')
 
     # Generate features from train and test data
     # features: character count features as a 2D numpy array, in tf-idf form
@@ -83,6 +90,7 @@ def train_test(classifier='svm'):
 
 def main():
     train_test('svm')
+    # train_test('naive_bayes')
 
     # print(preprocessed)
     # print(words)

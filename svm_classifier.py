@@ -6,10 +6,10 @@ from CustomClassifier import CustomClassifier
 
 
 class SVMClassifier(CustomClassifier):
-    def __init__(self):
+    def __init__(self, kernel='linear'):
         super().__init__()
         self.counter = None
-        self.classifier = OneVsRestClassifier(svm.SVC())
+        self.classifier = OneVsRestClassifier(svm.SVC(kernel=kernel, class_weight='balanced'))
 
     def fit(self, train_features, train_labels):
         self.classifier.fit(train_features, train_labels)

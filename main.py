@@ -2,6 +2,7 @@
 # Nikki van Gurp, Ilse Kerkhove, Dertje Roggeveen & Marieke Schelhaas
 import os
 import re
+import pandas as pd
 import sklearn
 from baseline import *
 from svm_classifier import SVMClassifier
@@ -41,7 +42,7 @@ def preprocess(word_list):
 
     return preprocessed_words
 
-def evaluate(true_labels, predicted_labels):
+def evaluate(true_labels, predicted_labels, class_labels=None):
     confusion_matrix = metrics.confusion_matrix(y_true=true_labels, y_pred=predicted_labels)
     print('***** Evaluation *****')
     print(confusion_matrix)
@@ -61,6 +62,9 @@ def evaluate(true_labels, predicted_labels):
 def train_test(classifier='svm'):
     train_text, train_labels, train_num = read_dataset('train')
     test_text, test_labels, test_num = read_dataset('dev')
+
+    train_text, train_labels = train_text[:10000], train_labels[:10000]
+    test_text, test_labels = test_text[:10000], test_labels[:10000]
 
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
@@ -83,24 +87,26 @@ def train_test(classifier='svm'):
 
     predicted_test_labels = cls.predict(test_feats)
 
-    evaluate(test_labels, predicted_test_labels)
+    evaluate(test_labels, predicted_test_labels, class_labels=pd.unique(test_labels))
+    print(predicted_test_labels[:100], test_labels[:100])
 
     return cls
 
 
 def main():
     train_test('svm')
-    # train_test('naive_bayes')
-
+    words, labels, numbers = read_dataset('train')
+    words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
     # print(preprocessed)
     # print(words)
     # print(labels)
     # print(numbers)
 
     # if uncommented --> makes baseline labels and prints its accuracy
-    # baseline_labels = get_baseline(words) # duurt lang
+    baseline_labels = get_baseline(words) # duurt lang
     # accuracy = metrics.accuracy_score(labels, baseline_labels)
     # print(accuracy)
+    evaluate(labels, baseline_labels)
 
 
 if __name__ == "__main__":

@@ -26,9 +26,6 @@ class KNNClassifier(CustomClassifier):
 
     def fit(self, train_feats, train_labels):
         """ Fit training data for classifier """
-        
-        # if hasattr(train_feats, "toarray"):
-        #     train_feats = train_feats.toarray()
 
         self.train_feats = train_feats
         self.train_labels = np.array(train_labels)
@@ -43,8 +40,5 @@ class KNNClassifier(CustomClassifier):
         """ Predict classes with provided test features """
 
         assert self.is_trained, 'Model must be trained before predicting'
-
-        # if hasattr(test_feats, "toarray"):
-        #     test_feats = test_feats.toarray()
 
         return self.knn.predict(test_feats)

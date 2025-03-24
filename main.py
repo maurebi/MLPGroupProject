@@ -46,8 +46,9 @@ def preprocess(word_list):
     for word in word_list:
         lowercase_word = word.lower()
         preprocessed_words.append(lowercase_word)
-    
+
     print(f"- Finished preprocessing for word list. ")
+
 
     return preprocessed_words
 
@@ -120,6 +121,7 @@ def main():
     Train_words, Train_labels, Train_numbers = read_dataset('train')
     Test_words, Test_labels, Test_numbers = read_dataset('test')
     # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
+
     # print(preprocessed)
     print(Train_words)
     # print(Train_labels)
@@ -132,6 +134,7 @@ def main():
     # # print(accuracy)
     # evaluate(Train_labels, baseline_labels)
     
+
 
 
 if __name__ == "__main__":

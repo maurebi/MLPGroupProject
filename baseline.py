@@ -6,6 +6,7 @@ def get_baseline(word_list):
         the labels that langid predicts. Langid returns the language
         of which it is the highest chance the word is from. '''
     # https://arturosbn.medium.com/pre-trained-python-model-for-easy-language-identification-5630029b9cbf
+    # https://pypi.org/project/py3langid/
     print("***** Baseline model predicts labels ******")
     labels = []
     for word in word_list:

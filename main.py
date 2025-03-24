@@ -43,8 +43,6 @@ def preprocess(word_list):
     for word in word_list:
         lowercase_word = word.lower()
         preprocessed_words.append(lowercase_word)
-    
-    print(f"Finished preprocessing for word list.")
 
     print(f"Finished preprocessing for word list.")
 
@@ -101,7 +99,7 @@ def train_test(classifier='svm'):
     predicted_test_labels = cls.predict(test_feats)
 
     evaluate(test_labels, predicted_test_labels)
-    #print(predicted_test_labels[:100], test_labels[:100])
+    # print(predicted_test_labels[:100], test_labels[:100])
 
     return cls
 

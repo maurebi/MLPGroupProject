@@ -10,6 +10,7 @@ from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier
 from knn import KNNClassifier
 from sklearn import metrics
+import numpy as np
 
 
 def read_dataset(subset):
@@ -32,7 +33,7 @@ def read_dataset(subset):
     assert len(words) == len(labels) and len(labels) == len(
         numbers), 'Error: there should be equal number of texts, labels and sentence numbers.'
     print(f'Number of samples: {len(words)}')
-    return words, labels, numbers
+    return np.array(words), np.array(labels), np.array(numbers)
 
 
 def preprocess(word_list):

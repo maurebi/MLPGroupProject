@@ -30,21 +30,19 @@ def read_dataset(subset):
                     numbers.append(sentence_number)
     assert len(words) == len(labels) and len(labels) == len(
         numbers), 'Error: there should be equal number of texts, labels and sentence numbers.'
-    print(f'Number of samples: {len(words)}')
+    print(f'- Number of samples: {len(words)}')
     return words, labels, numbers
 
 
 def preprocess(word_list):
     ''' this function returns the preprocessed version of the word list'''
-    print(f"Preprocessing the word list...")
+    print(f"- Preprocessing the word list...")
     preprocessed_words = []
     for word in word_list:
         lowercase_word = word.lower()
         preprocessed_words.append(lowercase_word)
     
-    print(f"Finished preprocessing for word list.")
-
-    print(f"Finished preprocessing for word list.")
+    print(f"- Finished preprocessing for word list. ")
 
     return preprocessed_words
 
@@ -67,15 +65,16 @@ def evaluate(true_labels, predicted_labels, class_labels=None):
     print("F1-score:", f1_score)
 
 
-def train_test(classifier='svm'):
+def train_test(classifier='svm', NE_and_punct=False):
     train_text, train_labels, train_num = read_dataset('train')
     test_text, test_labels, test_num = read_dataset('dev')
 
-    train_text, train_labels = train_text[:50000], train_labels[:50000]
-    test_text, test_labels = test_text[:50000], test_labels[:50000]
+    train_text, train_labels = train_text, train_labels
+    test_text, test_labels = test_text, test_labels
 
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
+    
 
     if classifier == 'svm':
         cls = SVMClassifier()
@@ -86,13 +85,20 @@ def train_test(classifier='svm'):
     else:
         raise ValueError('Invalid classifier name')
 
+    if NE_and_punct == 'True':
+        train_text = cls.NE_and_punct_recognizer(train_text)
+        test_text = cls.NE_and_punct_recognizer(test_text)
+
     # Generate features from train and test data
     # features: character count features as a 2D numpy array, in tf-idf form
     train_feats = cls.tf_idf(cls.get_features(train_text))
     test_feats = cls.tf_idf(cls.get_features(test_text))
+    
 
     cls.fit(train_feats, train_labels)
-
+    feature_coefficients = svm_model.coef_
+    for i, coeff in enumerate(feature_coefficients):
+        print(f"Feature {i+1}: {coeff}")
     predicted_test_labels = cls.predict(test_feats)
 
     evaluate(test_labels, predicted_test_labels)
@@ -102,22 +108,23 @@ def train_test(classifier='svm'):
 
 
 def main():
-    print("Running the svm classifier...")
-    train_test('svm')
-    print("Running the naive bayes classifier...")
-    train_test('naive_bayes')
-    words, labels, numbers = read_dataset('train')
-    # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
-    # print(preprocessed)
-    # print(words)
-    # print(labels)
-    # print(numbers)
+    print("*****Running the svm classifier... *****")
+    train_test('svm', True)
+    
+    print("***** Running the naive bayes classifier... *****")
+    train_test('naive_bayes', True)
+    # words, labels, numbers = read_dataset('train')
+    # # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
+    # # print(preprocessed)
+    # # print(words)
+    # # print(labels)
+    # # print(numbers)
 
-    # if uncommented --> makes baseline labels and prints its accuracy
-    baseline_labels = get_baseline(words)  # duurt lang
-    # accuracy = metrics.accuracy_score(labels, baseline_labels)
-    # print(accuracy)
-    evaluate(labels, baseline_labels)
+    # # if uncommented --> makes baseline labels and prints its accuracy
+    # baseline_labels = get_baseline(words)  # duurt lang
+    # # accuracy = metrics.accuracy_score(labels, baseline_labels)
+    # # print(accuracy)
+    # evaluate(labels, baseline_labels)
 
 
 if __name__ == "__main__":

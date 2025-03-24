@@ -8,7 +8,9 @@ import time
 from baseline import *
 from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier
+from knn import KNNClassifier
 from sklearn import metrics
+import numpy as np
 
 
 def read_dataset(subset):
@@ -30,8 +32,10 @@ def read_dataset(subset):
                     numbers.append(sentence_number)
     assert len(words) == len(labels) and len(labels) == len(
         numbers), 'Error: there should be equal number of texts, labels and sentence numbers.'
-    print(f'- Number of samples: {len(words)}')
-    return words, labels, numbers
+
+    print(f'Number of samples: {len(words)}')
+    return np.array(words), np.array(labels), np.array(numbers)
+
 
 
 def preprocess(word_list):
@@ -80,8 +84,8 @@ def train_test(classifier='svm', NE_and_punct=False):
         cls = SVMClassifier()
     elif classifier == 'naive_bayes':
         cls = NaiveBayesClassifier()
-    # elif classifier == 'knn':
-    #     cls = KNNClassifier()
+    elif classifier == 'knn':
+        cls = KNNClassifier()
     else:
         raise ValueError('Invalid classifier name')
 
@@ -91,18 +95,23 @@ def train_test(classifier='svm', NE_and_punct=False):
 
     # Generate features from train and test data
     # features: character count features as a 2D numpy array, in tf-idf form
+    print("Generating features...")
     train_feats = cls.tf_idf(cls.get_features(train_text))
     test_feats = cls.tf_idf(cls.get_features(test_text))
     
 
+    print("Fit training data for classifier...")
     cls.fit(train_feats, train_labels)
+    print("Predicting the labels")
+    
     feature_coefficients = svm_model.coef_
     for i, coeff in enumerate(feature_coefficients):
         print(f"Feature {i+1}: {coeff}")
+
     predicted_test_labels = cls.predict(test_feats)
 
     evaluate(test_labels, predicted_test_labels)
-    #print(predicted_test_labels[:100], test_labels[:100])
+    # print(predicted_test_labels[:100], test_labels[:100])
 
     return cls
 

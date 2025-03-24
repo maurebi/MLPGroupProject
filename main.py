@@ -46,6 +46,8 @@ def preprocess(word_list):
 
     print(f"Finished preprocessing for word list.")
 
+    print(f"Finished preprocessing for word list.")
+
     return preprocessed_words
 
 

@@ -9,5 +9,8 @@ To start up the online environment:
 >> source env/bin/activate
 >> pip install -r requirements.txt
 
+Dataset:
+Keep the folder "lid_spaeng" unzipped in the same directory.
+
 To run the software:
 >> python3 main.py

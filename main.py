@@ -3,6 +3,8 @@
 import os
 import re
 import pandas as pd
+import numpy as np
+import spacy
 import sklearn
 import time
 from baseline import *
@@ -10,7 +12,6 @@ from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier
 from knn import KNNClassifier
 from sklearn import metrics
-import numpy as np
 
 
 def read_dataset(subset):
@@ -73,8 +74,8 @@ def train_test(classifier='svm', NE_and_punct=False):
     train_text, train_labels, train_num = read_dataset('train')
     test_text, test_labels, test_num = read_dataset('dev')
 
-    train_text, train_labels = train_text, train_labels
-    test_text, test_labels = test_text, test_labels
+    train_text, train_labels = train_text[:50000], train_labels[:50000]
+    test_text, test_labels = test_text[:50000], test_labels[:50000]
 
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
@@ -89,26 +90,18 @@ def train_test(classifier='svm', NE_and_punct=False):
     else:
         raise ValueError('Invalid classifier name')
 
-    if NE_and_punct == 'True':
-        train_text = cls.NE_and_punct_recognizer(train_text)
-        test_text = cls.NE_and_punct_recognizer(test_text)
-
     # Generate features from train and test data
     # features: character count features as a 2D numpy array, in tf-idf form
-    print("Generating features...")
+    print("- Generating features...")
     train_feats = cls.tf_idf(cls.get_features(train_text))
     test_feats = cls.tf_idf(cls.get_features(test_text))
     
-
-    print("Fit training data for classifier...")
+    print("- Fit training data for classifier...")
     cls.fit(train_feats, train_labels)
-    print("Predicting the labels")
-    
-    feature_coefficients = svm_model.coef_
-    for i, coeff in enumerate(feature_coefficients):
-        print(f"Feature {i+1}: {coeff}")
 
+    print("- Predicting the labels")
     predicted_test_labels = cls.predict(test_feats)
+    print(predicted_test_labels)
 
     evaluate(test_labels, predicted_test_labels)
     # print(predicted_test_labels[:100], test_labels[:100])
@@ -117,23 +110,28 @@ def train_test(classifier='svm', NE_and_punct=False):
 
 
 def main():
-    print("*****Running the svm classifier... *****")
-    train_test('svm', True)
+    # print("*****Running the svm classifier... *****")
+    # train_test('svm', True)
     
-    print("***** Running the naive bayes classifier... *****")
-    train_test('naive_bayes', True)
-    # words, labels, numbers = read_dataset('train')
-    # # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
-    # # print(preprocessed)
-    # # print(words)
-    # # print(labels)
-    # # print(numbers)
+    # print("***** Running the naive bayes classifier... *****")
+    # train_test('naive_bayes', True)
+    
+    
+    Train_words, Train_labels, Train_numbers = read_dataset('train')
+    Test_words, Test_labels, Test_numbers = read_dataset('test')
+    # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
+    # print(preprocessed)
+    print(Train_words)
+    # print(Train_labels)
+    # print(Train_numbers)
+    
 
     # # if uncommented --> makes baseline labels and prints its accuracy
-    # baseline_labels = get_baseline(words)  # duurt lang
-    # # accuracy = metrics.accuracy_score(labels, baseline_labels)
+    # baseline_labels = get_baseline(Train_words)  # duurt lang
+    # # accuracy = metrics.accuracy_score(Train_labels, baseline_labels)
     # # print(accuracy)
-    # evaluate(labels, baseline_labels)
+    # evaluate(Train_labels, baseline_labels)
+    
 
 
 if __name__ == "__main__":

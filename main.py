@@ -72,7 +72,7 @@ def train_test(classifier='svm'):
     test_text, test_labels, test_num = read_dataset('dev')
 
     train_text, train_labels = train_text[:50000], train_labels[:50000]
-    test_text, test_labels = test_text[:50000], test_labels[:50000]
+    test_text, test_labels = test_text, test_labels
 
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
@@ -102,22 +102,25 @@ def train_test(classifier='svm'):
 
 
 def main():
+    start = time.time()
     print("Running the svm classifier...")
     train_test('svm')
-    print("Running the naive bayes classifier...")
-    train_test('naive_bayes')
-    words, labels, numbers = read_dataset('train')
-    # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
-    # print(preprocessed)
-    # print(words)
-    # print(labels)
-    # print(numbers)
-
-    # if uncommented --> makes baseline labels and prints its accuracy
-    baseline_labels = get_baseline(words)  # duurt lang
-    # accuracy = metrics.accuracy_score(labels, baseline_labels)
-    # print(accuracy)
-    evaluate(labels, baseline_labels)
+    end = time.time()
+    print(f"IT TOOK {end-start} SECONDS")
+    # print("Running the naive bayes classifier...")
+    # train_test('naive_bayes')
+    # words, labels, numbers = read_dataset('train')
+    # # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
+    # # print(preprocessed)
+    # # print(words)
+    # # print(labels)
+    # # print(numbers)
+    #
+    # # if uncommented --> makes baseline labels and prints its accuracy
+    # baseline_labels = get_baseline(words)  # duurt lang
+    # # accuracy = metrics.accuracy_score(labels, baseline_labels)
+    # # print(accuracy)
+    # evaluate(labels, baseline_labels)
 
 
 if __name__ == "__main__":

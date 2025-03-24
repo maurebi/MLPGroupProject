@@ -46,8 +46,6 @@ def preprocess(word_list):
 
     print(f"Finished preprocessing for word list.")
 
-    print(f"Finished preprocessing for word list.")
-
     return preprocessed_words
 
 
@@ -115,10 +113,7 @@ def main():
     train_test('knn')
     # words, labels, numbers = read_dataset('train')
     # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
-    # print(preprocessed)
-    # print(words)
-    # print(labels)
-    # print(numbers)
+
 
     # if uncommented --> makes baseline labels and prints its accuracy
     # baseline_labels = get_baseline(words)

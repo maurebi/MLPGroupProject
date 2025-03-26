@@ -11,6 +11,7 @@ from naive_bayes import NaiveBayesClassifier
 from knn import KNNClassifier
 from sklearn import metrics
 import numpy as np
+from ensemble_classifier import VotingEnsembleClassifier, StackingEnsembleClassifier
 
 
 def read_dataset(subset):
@@ -83,6 +84,10 @@ def train_test(classifier='svm'):
         cls = NaiveBayesClassifier()
     elif classifier == 'knn':
         cls = KNNClassifier()
+    elif classifier == 'voting':
+        cls = VotingEnsembleClassifier()
+    elif classifier == 'stacking':
+        cls = StackingEnsembleClassifier()
     else:
         raise ValueError('Invalid classifier name')
 
@@ -109,8 +114,15 @@ def main():
     # train_test('svm')
     # print("Running the naive bayes classifier...")
     # train_test('naive_bayes')
-    print("Running the knn classifier...")
-    train_test('knn')
+    # print("Running the knn classifier...")
+    # train_test('knn')
+
+    print("Running the voting ensemble classifier...")
+    train_test('voting')
+
+    print("Running the stacking ensemble classifier...")
+    train_test('stacking')
+
     # words, labels, numbers = read_dataset('train')
     # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
 

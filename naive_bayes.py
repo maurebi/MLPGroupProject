@@ -1,5 +1,5 @@
 import numpy as np
-from CustomClassifier import CustomClassifier
+from custom_classifier import CustomClassifier
 from sklearn.naive_bayes import MultinomialNB
 
 

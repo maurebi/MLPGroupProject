@@ -1,7 +1,7 @@
 from sklearn import svm
 from sklearn.multiclass import OneVsOneClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
-from CustomClassifier import CustomClassifier
+from custom_classifier import CustomClassifier
 
 
 

@@ -13,7 +13,7 @@ from naive_bayes import NaiveBayesClassifier
 from ne_punct_recognizer import NE_and_punct_recognizer
 from knn import KNNClassifier
 from sklearn import metrics
-
+from ensemble_classifier import VotingEnsembleClassifier, StackingEnsembleClassifier
 
 def read_dataset(subset):
     ''' this function reads the given subset in the data and returns lists
@@ -89,6 +89,10 @@ def train_test(classifier='svm', NE_and_punct=False):
         cls = NaiveBayesClassifier()
     elif classifier == 'knn':
         cls = KNNClassifier()
+    elif classifier == 'voting':
+        cls = VotingEnsembleClassifier()
+    elif classifier == 'stacking':
+        cls = StackingEnsembleClassifier()
     else:
         raise ValueError('Invalid classifier name')
 
@@ -112,13 +116,19 @@ def train_test(classifier='svm', NE_and_punct=False):
 
 
 def main():
-    # print("*****Running the svm classifier... *****")
-    # train_test('svm', True)
-    
-    # print("***** Running the naive bayes classifier... *****")
-    # train_test('naive_bayes', True)
-    
-    
+    # print("Running the svm classifier...")
+    # train_test('svm')
+    # print("Running the naive bayes classifier...")
+    # train_test('naive_bayes')
+    # print("Running the knn classifier...")
+    # train_test('knn')
+
+    print("Running the voting ensemble classifier...")
+    train_test('voting')
+
+    print("Running the stacking ensemble classifier...")
+    train_test('stacking')
+
     Train_words, Train_labels, Train_numbers = read_dataset('train')
     Test_words, Test_labels, Test_numbers = read_dataset('test')
     # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]

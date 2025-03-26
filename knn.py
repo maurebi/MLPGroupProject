@@ -1,6 +1,6 @@
 import numpy as np
 import scipy
-from CustomClassifier import CustomClassifier
+from custom_classifier import CustomClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
 """

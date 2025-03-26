@@ -10,6 +10,7 @@ import time
 from baseline import *
 from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier
+from ne_punct_recognizer import NE_and_punct_recognizer
 from knn import KNNClassifier
 from sklearn import metrics
 
@@ -124,6 +125,8 @@ def main():
 
     # print(preprocessed)
     print(Train_words)
+    test = NE_and_punct_recognizer(Train_words)
+    print(test)
     # print(Train_labels)
     # print(Train_numbers)
     

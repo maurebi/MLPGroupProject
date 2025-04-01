@@ -5,7 +5,7 @@ import re
 import pandas as pd
 import sklearn
 import time
-from baseline import *
+from baseline import get_baseline
 from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier
 from knn import KNNClassifier
@@ -112,8 +112,10 @@ def train_test(classifier='svm'):
 def main():
     # print("Running the svm classifier...")
     # train_test('svm')
+
     # print("Running the naive bayes classifier...")
     # train_test('naive_bayes')
+
     # print("Running the knn classifier...")
     # train_test('knn')
 
@@ -125,7 +127,6 @@ def main():
 
     # words, labels, numbers = read_dataset('train')
     # words, labels, numbers = words[:1000], labels[:1000], numbers[:1000]
-
 
     # if uncommented --> makes baseline labels and prints its accuracy
     # baseline_labels = get_baseline(words)

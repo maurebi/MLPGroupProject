@@ -5,3 +5,6 @@ scikit-learn
 scipy==1.10.1
 threadpoolctl==3.5.0
 pandas
+nltk
+spacy==3.8.0
+

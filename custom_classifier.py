@@ -10,7 +10,7 @@ class CustomClassifier(abc.ABC):
     def get_features(self, text_list):
         """ Return word (or ngram) count features for each text as a 2D numpy array """
         if self.counter is None:
-            self.counter = CountVectorizer(analyzer='char', ngram_range=(1,3))
+            self.counter = CountVectorizer(analyzer='char', ngram_range=(3,3))
             features_array = self.counter.fit_transform(text_list)
         else:
             features_array = self.counter.transform(text_list)

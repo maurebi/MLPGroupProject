@@ -8,3 +8,4 @@ pandas
 nltk
 spacy==3.8.0
 
+

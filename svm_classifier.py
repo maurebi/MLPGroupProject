@@ -9,7 +9,7 @@ class SVMClassifier(CustomClassifier):
     def __init__(self, kernel='linear'):
         super().__init__()
         self.counter = None
-        self.classifier = OneVsOneClassifier(svm.LinearSVC(class_weight='balanced', dual=False))
+        self.classifier = OneVsOneClassifier(svm.LinearSVC(class_weight='balanced', dual=False, max_iter=1000))
 
     def fit(self, train_features, train_labels):
         self.classifier.fit(train_features, train_labels)

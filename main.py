@@ -2,12 +2,7 @@
 # Nikki van Gurp, Ilse Kerkhove, Dertje Roggeveen & Marieke Schelhaas
 import os
 import re
-import pandas as pd
 import numpy as np
-import spacy
-import sklearn
-import time
-from scipy.sparse import csr_matrix, hstack
 from baseline import get_baseline
 from svm_classifier import SVMClassifier
 from naive_bayes import NaiveBayesClassifier

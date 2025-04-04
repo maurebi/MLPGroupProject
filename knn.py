@@ -1,5 +1,4 @@
 import numpy as np
-import scipy
 from custom_classifier import CustomClassifier
 from sklearn.neighbors import KNeighborsClassifier
 

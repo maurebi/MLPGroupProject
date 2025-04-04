@@ -4,8 +4,6 @@ from naive_bayes import NaiveBayesClassifier
 from knn import KNNClassifier
 from sklearn.ensemble import VotingClassifier, StackingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.naive_bayes import ComplementNB
 
 
 class VotingEnsembleClassifier(CustomClassifier):

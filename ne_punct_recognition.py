@@ -1,7 +1,9 @@
 import spacy
 import string
 
+
 nlpEN = spacy.load('en_core_web_sm')
+
 
 def ne_punct_recognizer(words, tweet_num, tweets):
     """Recognize named entities and punctuation in a list of words from tweets.
@@ -18,7 +20,8 @@ def ne_punct_recognizer(words, tweet_num, tweets):
     Returns
     -------
     list
-        List of labels ('other' for punctuation, 'ne' for named entities, 'none' otherwise).
+        List of labels ('other' for punctuation, 'ne' for named entities,
+        'none' otherwise).
     """
     print(f"- Processing Named Entities and Punctuation...")
     labels = []
@@ -45,6 +48,6 @@ def ne_punct_recognizer(words, tweet_num, tweets):
         else:
             labels.append('none')
 
-    print(f"- Finished processing Named Entities and Punctuation.") 
-    return labels
+    print(f"- Finished processing Named Entities and Punctuation.")
 
+    return labels

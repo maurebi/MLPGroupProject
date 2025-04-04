@@ -15,6 +15,7 @@ from knn import KNNClassifier
 from sklearn import metrics
 from ensemble_classifier import VotingEnsembleClassifier, StackingEnsembleClassifier
 
+
 def read_dataset(subset):
     """Read the given subset from the dataset and extract words, labels, and sentence numbers.
 
@@ -39,7 +40,7 @@ def read_dataset(subset):
     words, labels, numbers, tweets = [], [], [], []
     currentTweet = None
     tweet = ""
-    
+
     with open(fname, 'r', encoding='utf-8') as file:
         for line in file:
             match = re.match(r"#\s*sent_enum\s*=\s*(\d+)", line)
@@ -53,7 +54,7 @@ def read_dataset(subset):
                     numbers.append(sentence_number)
                     if sentence_number != currentTweet:
                         currentTweet = sentence_number
-                        tweets.append(tweet)            
+                        tweets.append(tweet)
                         tweet = ""
                     else:
                         tweet += " " + splitted_line[0]
@@ -62,7 +63,6 @@ def read_dataset(subset):
 
     print(f'Number of samples: {len(words)}')
     return np.array(words), np.array(labels), np.array(numbers), np.array(tweets)
-
 
 
 def preprocess(word_list):
@@ -85,7 +85,6 @@ def preprocess(word_list):
         preprocessed_words.append(lowercase_word)
 
     print(f"- Finished preprocessing for word list. ")
-
 
     return preprocessed_words
 
@@ -124,7 +123,7 @@ def evaluate(true_labels, predicted_labels, class_labels=None):
     print("F1-score:", f1_score)
 
 
-def train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='svm'):    
+def train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='svm'):
     """Train a classifier and evaluate its performance on test data.
 
     Parameters
@@ -183,8 +182,6 @@ def train_test(train_text, test_text, train_labels, train_num, train_tweets, tes
     return cls
 
 
-
-
 def main():
     train_text, train_labels, train_num, train_tweets = read_dataset('train')
     test_text, test_labels, test_num, test_tweets = read_dataset('dev')
@@ -192,20 +189,18 @@ def main():
     # train_text, train_labels, train_num, train_tweets = train_text[:1000], train_labels[:1000], train_num[:1000], train_tweets[:1000]
     # test_text, test_labels, test_num, test_tweets = test_text[:200], test_labels[:200], test_num[:200], test_tweets[:200]
 
-    # train_text, train_labels, train_num, train_tweets = train_text[:50000], train_labels[:50000], train_num[:50000], train_tweets[:50000]
-    # test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
-    
+    # train_text, train_labels, train_num, train_tweets = train_text[:80000], train_labels[:80000], train_num[:80000], train_tweets[:80000]
+    # test_text, test_labels, test_num, test_tweets = test_text[:8000], test_labels[:8000], test_num[:8000], test_tweets[:8000]
+
     # train_text = preprocess(train_text)
     # test_text = preprocess(test_text)
-    
-    # TODO does not currently work --> FIX
+
     # print("*** Running the baseline...")
-    # baseline_labels = get_baseline(train_test)  
+    # baseline_labels = get_baseline(train_test)
     # accuracy = metrics.accuracy_score(train_labels, baseline_labels)
     # print(accuracy)
     # evaluate(train_labels, baseline_labels)
-    
-    
+
     # print("*** Running the svm classifier...")
     # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'svm')
 

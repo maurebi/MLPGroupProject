@@ -3,16 +3,10 @@ import scipy
 from custom_classifier import CustomClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
-"""
-Implement a KNN classifier with required functions:
-
-fit(train_features, train_labels): to train the classifier
-predict(test_features): to predict test labels 
-"""
-
 
 class KNNClassifier(CustomClassifier):
     """A K-Nearest Neighbors classifier extending CustomClassifier."""
+
     def __init__(self, k=5, distance_metric='cosine'):
         """Initialize the KNN classifier.
 
@@ -51,13 +45,12 @@ class KNNClassifier(CustomClassifier):
 
         self.train_feats = train_feats
         self.train_labels = np.array(train_labels)
-        
+
         self.knn.fit(self.train_feats, self.train_labels)
 
         self.is_trained = True
         print("KNN model fitted.")
         return self
-        
 
     def predict(self, test_feats):
         """Predict labels for the test data using the trained model.

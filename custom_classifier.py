@@ -5,8 +5,10 @@ import string
 from ne_punct_recognition import ne_punct_recognizer
 from nltk.corpus import words, stopwords
 
+
 class CustomClassifier(abc.ABC):
     """Abstract base class for custom classifiers with feature extraction methods."""
+
     def __init__(self):
         """Initialize the CustomClassifier with word dictionaries and feature extractor."""
         self.counter = None
@@ -27,7 +29,7 @@ class CustomClassifier(abc.ABC):
             Count features as a sparse matrix.
         """
         if self.counter is None:
-            self.counter = CountVectorizer(analyzer='char', ngram_range=(1,3), max_features=10000, min_df=5)
+            self.counter = CountVectorizer(analyzer='char', ngram_range=(1, 3), max_features=10000, min_df=5)
             features_array = self.counter.fit_transform(text_list)
         else:
             features_array = self.counter.transform(text_list)

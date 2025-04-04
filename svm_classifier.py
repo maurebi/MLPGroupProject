@@ -4,7 +4,6 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from custom_classifier import CustomClassifier
 
 
-
 class SVMClassifier(CustomClassifier):
     """A Support Vector Machine classifier extending CustomClassifier using OneVsOne strategy."""
     def __init__(self, kernel='linear'):

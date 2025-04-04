@@ -7,8 +7,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.naive_bayes import ComplementNB
 
-#TODO update requirements.txt
-
 
 class VotingEnsembleClassifier(CustomClassifier):
     """A voting ensemble classifier combining SVM, Naive Bayes, and KNN classifiers."""
@@ -76,6 +74,7 @@ class VotingEnsembleClassifier(CustomClassifier):
         combined_test_features = self.get_combined_features(test_text, tweet_num, tweets)
         return self.ensemble.predict(combined_test_features)
 
+
 class StackingEnsembleClassifier(CustomClassifier):
     """A stacking ensemble classifier combining SVM, Naive Bayes, and KNN with a meta-classifier."""
     def __init__(self):
@@ -101,15 +100,15 @@ class StackingEnsembleClassifier(CustomClassifier):
                 ('knn', self.knn.knn)
             ],
             final_estimator=RandomForestClassifier(
-                n_estimators=100, 
-                max_depth=10, 
-                min_samples_split=5, 
-                class_weight='balanced', 
+                n_estimators=100,
+                max_depth=10,
+                min_samples_split=5,
+                class_weight='balanced',
                 random_state=42
             ),
-            cv=5,  # Use 5-fold cross-validation for out-of-fold predictions
-            passthrough=True,  # Pass original features to the meta-classifier
-            n_jobs=-1  # Parallelize training
+            cv=5,
+            passthrough=True,
+            n_jobs=-1
         )
 
     def fit(self, train_labels, train_text, tweet_num, tweets):

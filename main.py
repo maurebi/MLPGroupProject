@@ -126,8 +126,8 @@ def main():
     # train_text, train_labels, train_num, train_tweets = train_text[:10000], train_labels[:10000], train_num[:10000], train_tweets[:10000]
     # test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
     
-    train_text = preprocess(train_text)
-    test_text = preprocess(test_text)
+    # train_text = preprocess(train_text)
+    # test_text = preprocess(test_text)
     
     # TODO does not currently work --> FIX
     # print("*** Running the baseline...")

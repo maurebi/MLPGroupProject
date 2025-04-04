@@ -93,8 +93,8 @@ def train_test(train_text, test_text, train_labels, train_num, train_tweets, tes
         cls = KNNClassifier()
     elif classifier == 'voting':
         cls = VotingEnsembleClassifier()
-    elif classifier == 'stacking':
-        cls = StackingEnsembleClassifier()
+    # elif classifier == 'stacking':
+    #     cls = StackingEnsembleClassifier()
     else:
         raise ValueError('Invalid classifier name')
 
@@ -130,7 +130,7 @@ def main():
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
     
-    # # if uncommented --> makes baseline labels and prints its accuracy
+    # print("*** Running the baseline...")
     # baseline_labels = get_baseline(Train_words)  
     # # accuracy = metrics.accuracy_score(Train_labels, baseline_labels)
     # # print(accuracy)
@@ -138,23 +138,19 @@ def main():
     
     
     # print("*** Running the svm classifier...")
-    # # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'svm')
+    # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'svm')
+
     # print("*** Running the naive bayes classifier...")
     # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'naive_bayes')
+
     # print("*** Running the knn classifier...")
     # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'knn')
 
-    # print("*** Running the voting ensemble classifier...")
-    # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='voting')
-    print("*** Running the stacking ensemble classifier...")
-    train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'stacking')
+    print("*** Running the voting ensemble classifier...")
+    train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='voting')
 
-
-    
-
-
-    
-
+    # print("*** Running the stacking ensemble classifier...")
+    # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'stacking')
 
 
 if __name__ == "__main__":

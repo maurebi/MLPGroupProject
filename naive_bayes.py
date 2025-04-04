@@ -4,13 +4,8 @@ from sklearn.naive_bayes import MultinomialNB
 
 
 class NaiveBayesClassifier(CustomClassifier):
-    """
-    Custom Naive Bayes classifier using scikit-learn's MultinomialNB.
-    """
-
+    """A Naive Bayes classifier extending CustomClassifier using MultinomialNB."""
     def __init__(self, alpha=1.0):
-        """ Initialize the Naive Bayes classifier with smoothing
-        parameter alpha. """
         super().__init__()
         self.alpha = alpha
         self.prior_probabilities = None
@@ -18,61 +13,47 @@ class NaiveBayesClassifier(CustomClassifier):
         self.is_trained = False
 
     def fit(self, X_train, y_train):
-        """
-        Train the Naive Bayes classifier.
-
-        Fits the Naive Bayes model to the provided training data and
-        computes the prior probabilities of each class.
+        """Fit the Naive Bayes model to the training data.
 
         Parameters
         ----------
         X_train : array-like of shape (n_samples, n_features)
-            Feature matrix for training data.
+            Training data features.
         y_train : array-like of shape (n_samples,)
-            Corresponding labels for the training data.
+            Training data labels.
 
         Returns
         -------
-        CustomNaiveBayes
-            The trained instance of `CustomNaiveBayes`.
-
-        Notes
-        -----
-        This method calculates the class prior probabilities based on the
-        distribution of `y_train` and stores them in `prior_probabilities`.
+        self : NaiveBayesClassifier
+            Returns the instance itself after fitting.
         """
+        print("Fitting nb model...")
         self.model.fit(X_train, y_train)
         self.is_trained = True
 
         # Compute class priors
         unique_classes, class_counts = np.unique(y_train, return_counts=True)
         self.prior_probabilities = class_counts / np.sum(class_counts)
+        print("Finished fitting nb model.")
 
         return self
 
     def predict(self, X_test):
-        """
-        Predict class labels for the given test data.
-
-        Uses the trained Naive Bayes model to predict class labels for
-        input feature vectors.
+        """Predict labels for the test data using the trained model.
 
         Parameters
         ----------
         X_test : array-like of shape (n_samples, n_features)
-            Feature matrix for test data.
+            Test data features.
 
         Returns
         -------
         ndarray of shape (n_samples,)
-            Predicted class labels for each sample.
-
-        Raises
-        ------
-        ValueError
-            If the model has not been trained before prediction.
+            Predicted labels for the test data.
         """
+        print("Predicting nb model...")
         if not self.is_trained:
             raise ValueError("The model must be trained first.")
+        print("Finished predicting nb model.")
 
         return self.model.predict(X_test)

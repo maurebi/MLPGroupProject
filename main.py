@@ -16,8 +16,24 @@ from sklearn import metrics
 from ensemble_classifier import VotingEnsembleClassifier, StackingEnsembleClassifier
 
 def read_dataset(subset):
-    ''' this function reads the given subset in the data and returns lists
-        of the words, labels and sentence numbers that are found in the file '''
+    """Read the given subset from the dataset and extract words, labels, and sentence numbers.
+
+    Parameters
+    ----------
+    subset : str
+        The name of the dataset subset to read (e.g., 'train', 'dev').
+
+    Returns
+    -------
+    ndarray
+        Array of words extracted from the dataset.
+    ndarray
+        Array of labels corresponding to the words.
+    ndarray
+        Array of sentence numbers corresponding to the words.
+    ndarray
+        Array of full tweets constructed from the words.
+    """
     print('***** Reading the dataset *****')
     fname = os.path.join("lid_spaeng", f'{subset}.conll')
     words, labels, numbers, tweets = [], [], [], []
@@ -50,7 +66,18 @@ def read_dataset(subset):
 
 
 def preprocess(word_list):
-    ''' this function returns the preprocessed version of the word list'''
+    """Preprocess a list of words by converting them to lowercase.
+
+    Parameters
+    ----------
+    word_list : list or ndarray
+        List or array of words to preprocess.
+
+    Returns
+    -------
+    list
+        List of preprocessed (lowercased) words.
+    """
     print(f"- Preprocessing the word list...")
     preprocessed_words = []
     for word in word_list:
@@ -64,8 +91,22 @@ def preprocess(word_list):
 
 
 def evaluate(true_labels, predicted_labels, class_labels=None):
-    '''This function evaluates the models based on 
-    accuracy, recall, precision and F1-scores'''
+    """Evaluate model performance using accuracy, precision, recall, and F1-score metrics.
+
+    Parameters
+    ----------
+    true_labels : array-like
+        Ground truth labels for the test data.
+    predicted_labels : array-like
+        Predicted labels from the model.
+    class_labels : list, optional
+        List of class labels. If None, inferred from true_labels and predicted_labels.
+
+    Returns
+    -------
+    None
+        Prints evaluation metrics including confusion matrix, accuracy, precision, recall, and F1-score.
+    """
     confusion_matrix = metrics.confusion_matrix(y_true=true_labels, y_pred=predicted_labels)
     print('***** Evaluation *****')
     print(confusion_matrix)
@@ -84,7 +125,34 @@ def evaluate(true_labels, predicted_labels, class_labels=None):
 
 
 def train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='svm'):    
+    """Train a classifier and evaluate its performance on test data.
 
+    Parameters
+    ----------
+    train_text : array-like
+        Training data words or text features.
+    test_text : array-like
+        Test data words or text features.
+    train_labels : array-like
+        Labels for the training data.
+    train_num : array-like
+        Sentence numbers for the training data.
+    train_tweets : array-like
+        Full tweets for the training data.
+    test_num : array-like
+        Sentence numbers for the test data.
+    test_tweets : array-like
+        Full tweets for the test data.
+    test_labels : array-like
+        Labels for the test data.
+    classifier : str, optional
+        Type of classifier to use ('svm', 'naive_bayes', 'knn', 'voting', 'stacking'). Default is 'svm'.
+
+    Returns
+    -------
+    object
+        Trained classifier instance.
+    """
     if classifier == 'svm':
         cls = SVMClassifier()
     elif classifier == 'naive_bayes':
@@ -101,6 +169,7 @@ def train_test(train_text, test_text, train_labels, train_num, train_tweets, tes
     # Train and predict
     if classifier in ['voting', 'stacking']:
         cls.fit(train_labels, train_text, train_num, train_tweets)
+
         predicted_test_labels = cls.predict(test_text, test_num, test_tweets)
     else:
         train_feats = cls.get_combined_features(train_text, train_num, train_tweets)
@@ -123,7 +192,7 @@ def main():
     # train_text, train_labels, train_num, train_tweets = train_text[:1000], train_labels[:1000], train_num[:1000], train_tweets[:1000]
     # test_text, test_labels, test_num, test_tweets = test_text[:200], test_labels[:200], test_num[:200], test_tweets[:200]
 
-    # train_text, train_labels, train_num, train_tweets = train_text[:10000], train_labels[:10000], train_num[:10000], train_tweets[:10000]
+    # train_text, train_labels, train_num, train_tweets = train_text[:50000], train_labels[:50000], train_num[:50000], train_tweets[:50000]
     # test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
     
     # train_text = preprocess(train_text)

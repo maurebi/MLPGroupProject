@@ -14,7 +14,7 @@ class CustomClassifier(abc.ABC):
     def get_features(self, text_list):
         """ Return word (or ngram) count features for each text as a 2D numpy array """
         if self.counter is None:
-            self.counter = CountVectorizer(analyzer='char', ngram_range=(3,3), max_features=10000, min_df=5)
+            self.counter = CountVectorizer(analyzer='char', ngram_range=(1,3), max_features=10000, min_df=5)
             features_array = self.counter.fit_transform(text_list)
         else:
             features_array = self.counter.transform(text_list)
@@ -26,6 +26,7 @@ class CustomClassifier(abc.ABC):
         return tfidf_transformer.transform(text_feats)
 
     def extract_handcrafted_features(self, word_list):
+        print("Getting handcrafted features...")
         features = []
         for word in word_list:
             word_lower = word.lower()
@@ -53,6 +54,9 @@ class CustomClassifier(abc.ABC):
                 in_both_dicts,
                 in_neither,
             ])
+
+        print("Finished getting handcrafted features.")
+
         return np.array(features)
 
     def get_punctuation_features(self, punct_labels):
@@ -74,6 +78,7 @@ class CustomClassifier(abc.ABC):
         handcrafted_feats = self.extract_handcrafted_features(text)
 
         combined_feats = np.hstack([text_tfidf, punct_features, ne_features, handcrafted_feats])
+        print("Finished getting combined features.")
         return combined_feats
 
     @abc.abstractmethod

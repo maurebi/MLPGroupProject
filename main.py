@@ -124,17 +124,17 @@ def main():
     # train_text, train_labels, train_num, train_tweets = train_text[:1000], train_labels[:1000], train_num[:1000], train_tweets[:1000]
     # test_text, test_labels, test_num, test_tweets = test_text[:200], test_labels[:200], test_num[:200], test_tweets[:200]
 
-    train_text, train_labels, train_num, train_tweets = train_text[:10000], train_labels[:10000], train_num[:10000], train_tweets[:10000]
-    test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
+    # train_text, train_labels, train_num, train_tweets = train_text[:10000], train_labels[:10000], train_num[:10000], train_tweets[:10000]
+    # test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
     
-    train_text = preprocess(train_text)
-    test_text = preprocess(test_text)
+    # train_text = preprocess(train_text)
+    # test_text = preprocess(test_text)
     
-    # print("*** Running the baseline...")
-    # baseline_labels = get_baseline(Train_words)  
-    # # accuracy = metrics.accuracy_score(Train_labels, baseline_labels)
-    # # print(accuracy)
-    # evaluate(Train_labels, baseline_labels)
+    print("*** Running the baseline...")
+    baseline_labels = get_baseline(train_text)  
+    accuracy = metrics.accuracy_score(train_labels, baseline_labels)
+    print(accuracy)
+    evaluate(train_labels, baseline_labels)
     
     
     # print("*** Running the svm classifier...")
@@ -146,8 +146,8 @@ def main():
     # print("*** Running the knn classifier...")
     # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'knn')
 
-    print("*** Running the voting ensemble classifier...")
-    train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='voting')
+    # print("*** Running the voting ensemble classifier...")
+    # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='voting')
 
     # print("*** Running the stacking ensemble classifier...")
     # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'stacking')

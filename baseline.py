@@ -7,7 +7,7 @@ def get_baseline(word_list):
         of which it is the highest chance the word is from. '''
     # https://arturosbn.medium.com/pre-trained-python-model-for-easy-language-identification-5630029b9cbf
     # https://pypi.org/project/py3langid/
-    print("***** Baseline model predicts labels ******")
+    print("- Predicts baseline labels...")
     labels = []
     for word in word_list:
         if any(ch in string.punctuation for ch in word):

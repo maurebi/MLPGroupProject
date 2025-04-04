@@ -93,28 +93,27 @@ def train_test(train_text, test_text, train_labels, train_num, train_tweets, tes
         cls = KNNClassifier()
     elif classifier == 'voting':
         cls = VotingEnsembleClassifier()
-    # elif classifier == 'stacking':
-    #     cls = StackingEnsembleClassifier()
+    elif classifier == 'stacking':
+        cls = StackingEnsembleClassifier()
     else:
         raise ValueError('Invalid classifier name')
 
-    if classifier == 'voting' or classifier == 'stacking':
-        # Processing `print-statements are in the function itself`
+    # Train and predict
+    if classifier in ['voting', 'stacking']:
         cls.fit(train_labels, train_text, train_num, train_tweets)
-        print("- Predicting the labels")
         predicted_test_labels = cls.predict(test_text, test_num, test_tweets)
     else:
-        # Generate combined features using get_combined_features for both train and test data
-        train_feats = cls.tf_idf(cls.get_features(train_text))
-        test_feats = cls.tf_idf(cls.get_features(test_text))
-        print("- Fit training data for classifier...")
+        train_feats = cls.get_combined_features(train_text, train_num, train_tweets)
+        test_feats = cls.get_combined_features(test_text, test_num, test_tweets)
+
         cls.fit(train_feats, train_labels)
-        print("- Predicting the labels")
         predicted_test_labels = cls.predict(test_feats)
 
     evaluate(test_labels, predicted_test_labels)
 
     return cls
+
+
 
 
 def main():
@@ -124,17 +123,18 @@ def main():
     # train_text, train_labels, train_num, train_tweets = train_text[:1000], train_labels[:1000], train_num[:1000], train_tweets[:1000]
     # test_text, test_labels, test_num, test_tweets = test_text[:200], test_labels[:200], test_num[:200], test_tweets[:200]
 
-    train_text, train_labels, train_num, train_tweets = train_text[:10000], train_labels[:10000], train_num[:10000], train_tweets[:10000]
-    test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
+    # train_text, train_labels, train_num, train_tweets = train_text[:10000], train_labels[:10000], train_num[:10000], train_tweets[:10000]
+    # test_text, test_labels, test_num, test_tweets = test_text[:2000], test_labels[:2000], test_num[:2000], test_tweets[:2000]
     
     train_text = preprocess(train_text)
     test_text = preprocess(test_text)
     
+    # TODO does not currently work --> FIX
     # print("*** Running the baseline...")
-    # baseline_labels = get_baseline(Train_words)  
-    # # accuracy = metrics.accuracy_score(Train_labels, baseline_labels)
-    # # print(accuracy)
-    # evaluate(Train_labels, baseline_labels)
+    # baseline_labels = get_baseline(train_test)  
+    # accuracy = metrics.accuracy_score(train_labels, baseline_labels)
+    # print(accuracy)
+    # evaluate(train_labels, baseline_labels)
     
     
     # print("*** Running the svm classifier...")
@@ -146,11 +146,11 @@ def main():
     # print("*** Running the knn classifier...")
     # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'knn')
 
-    print("*** Running the voting ensemble classifier...")
-    train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='voting')
+    # print("*** Running the voting ensemble classifier...")
+    # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, classifier='voting')
 
-    # print("*** Running the stacking ensemble classifier...")
-    # train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'stacking')
+    print("*** Running the stacking ensemble classifier...")
+    train_test(train_text, test_text, train_labels, train_num, train_tweets, test_num, test_tweets, test_labels, 'stacking')
 
 
 if __name__ == "__main__":
